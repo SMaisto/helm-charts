@@ -41,7 +41,7 @@ spec:
               service:
                 name: {{ include "keycloak.fullname" $ }}-http
                 port:
-                  name: {{ $ingress.servicePort }}
+                  {{ ternary "name" "number" (kindIs "string" $ingress.servicePort) }}: {{ $ingress.servicePort }}
             {{- else }}
             backend:
               serviceName: {{ include "keycloak.fullname" $ }}-http
